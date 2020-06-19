@@ -1,0 +1,16 @@
+Package: SnowFor2
+Type: Package
+Title: multithreading map-like function based on snow and foreach
+Version: 0.7.3
+Author: Li Weicheng
+Maintainer: Li Weicheng <yourself@somewhere.net>
+Description: multithreading map-like function based on snow and foreach
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+Suggests: testthat
+Imports: doSNOW,
+  foreach,
+  snow,
+  stringr

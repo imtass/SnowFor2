@@ -100,8 +100,6 @@ txtProgressBarETA <- function (min = 0, max = 1, initial = 0, char = "=", width 
   .nb <- 0L
   .pc <- -1L
   .time0 <- NA
-  #.timenow <- NA
-  .firstUpdate <- T
 
   # Kevin - Set previous length
   .prevLength <- 0
@@ -118,12 +116,14 @@ txtProgressBarETA <- function (min = 0, max = 1, initial = 0, char = "=", width 
   }
 
   up <- function(value, calledOnCreation = F) {
-    timenow <- Sys.time()
+    #cat("\nupdate time\n")
+    timenow <- as.numeric(Sys.time())
+    #print(timenow)
 
     if (calledOnCreation) {
       .time0 <<- timenow
-      .timenow <<- timenow
-      .firstUpdate <<- F
+      #cat("\nnew time0\n")
+      #print(.time0)
     }
 
     if (!is.finite(value) || value < min || value > max) {
@@ -147,25 +147,27 @@ txtProgressBarETA <- function (min = 0, max = 1, initial = 0, char = "=", width 
       paste0(stringr::str_pad(n,width=dig,side = 'left',pad=' '),"/",total,sep="")
     }
 
-    #.timenow <<- timenow
-    span <- as.numeric(timenow - .time0)
+    span <- (timenow - .time0)
+    #cat("\n span",span,"\n")
     timeXiter <- span / (.val - min)
+    #cat("\n timeXiter",timeXiter,"\n")
     ETA <- (max - .val) * timeXiter
+    #cat("\n ETA",ETA,"\n")
     ETAstr <- formatTime(ETA)
 
     # Kevin - Erase previous line
     if (.prevLength != 0) {
-      cat(paste(c("\r ",getProgressStr()," |", rep.int(" ", nw * .prevLength + 6)), collapse = ""), file = file)
+      cat(paste(c("\r  ",getProgressStr()," |", rep.int(" ", nw * .prevLength + 6)), collapse = ""), file = file)
     }
 
-    line = paste(c("\r ",getProgressStr()," |", rep.int(char, nb), rep.int(" ", nw * (width - nb)),
+    line = paste(c("\r  ",getProgressStr()," |", rep.int(char, nb), rep.int(" ", nw * (width - nb)),
                    sprintf("| %3d%%", pc), ", ETA ", ETAstr), collapse = "")
     cat(line, file = file)
     .prevLength <<- nchar(line)
 
     # Kevin - Display elapsed time when completed. Otherwise, display ETA.
     if (value == max) {
-      cat(paste(c("\r ",getProgressStr()," |", rep.int(char, nb), rep.int(" ", nw * (width - nb)),
+      cat(paste(c("\r  ",getProgressStr()," |", rep.int(char, nb), rep.int(" ", nw * (width - nb)),
                   sprintf("| %3d%%", pc), ", Elapsed ", formatTime(span)), collapse = ""), file = file)
     }
 

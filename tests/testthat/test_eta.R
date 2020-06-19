@@ -1,5 +1,5 @@
 context("SnowFor_ETA")
-#skip("too long")
+skip("too long")
 
 go_fun = function(x){
   Sys.sleep(5)

@@ -6,7 +6,7 @@
 #' @param x list to loop. Accept vector, list and data.frame(by row)
 #' @param FUN the function for mapping
 #' @param pre_fun prepare function to init all nodes
-#' @param varlist name string vector of objects to be exported to nodes: "a_variable"
+#' @param var_list name string vector of objects to be exported to nodes: "a_variable"
 #' @param cores number of threads
 #' @param env env to store the cl object. defalut: globalenv()
 #' @param show_workers_msg show workers' message or not
@@ -27,7 +27,7 @@
 snowFor = function(x,
                    FUN,
                    pre_fun = NULL,
-                   varlist = NULL,
+                   var_list = NULL,
                    cores = parallel::detectCores(),
                    env = globalenv(),
                    show_workers_msg = F) {
@@ -55,7 +55,7 @@ snowFor = function(x,
   }
 
   cat("\nCores =",cores,"\n")
-  cat("Making clusters ... ")
+  cat("Make clusters ... ")
 
   if(show_workers_msg){
     assign(".snowfor_cl", makeSOCKcluster(cores, outfile = ""), envir = env)
@@ -67,17 +67,28 @@ snowFor = function(x,
 
   cat("done.\n")
 
-
-  if (!is.null(pre_fun) | !is.null(varlist)) {
-    cat("Perparing nodes ... ")
-    if(!is.null(pre_fun)){
-      clusterCall(env$.snowfor_cl, pre_fun)
-    }
-    if(!is.null(varlist)){
-      clusterExport(env$.snowfor_cl, varlist)
-    }
+  if(!is.null(pre_fun)){
+    cat("Call preparing function ... ")
+    clusterCall(env$.snowfor_cl, pre_fun)
     cat("done.\n")
   }
+
+  if(!is.null(var_list)){
+    cat("Copy variables ... ")
+    clusterExport(env$.snowfor_cl, var_list)
+    cat("done.\n")
+  }
+#
+#   if (!is.null(pre_fun) | !is.null(var_list)) {
+#     cat("Perparing nodes ... ")
+#     if(!is.null(pre_fun)){
+#       clusterCall(env$.snowfor_cl, pre_fun)
+#     }
+#     if(!is.null(var_list)){
+#       clusterExport(env$.snowfor_cl, var_list)
+#     }
+#     cat("done.\n")
+#   }
 
   pb <- txtProgressBarETA(max = length(x))
 

@@ -24,7 +24,7 @@ go_fun = function(x){
 a = snowFor(1:6, function(x){
   #if(x == 3){stop("adsf")}
   some_value * x
-},varlist = c("some_value"),cores = 2)
+},var_list = c("some_value"),cores = 2)
 
 test_that("export", {
   expect_equal(unlist(a), (1:6) * 123)
@@ -38,7 +38,7 @@ test_that("errors", {
     a = snowFor(1:6, function(x){
       if(x == 3){stop("adsf")}
       some_value * x
-    },varlist = c("some_value"),cores = 2)
+    },var_list = c("some_value"),cores = 2)
   })
 
   expect_equal(class(a[[3]]), "ThreadError")

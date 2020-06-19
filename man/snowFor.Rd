@@ -8,7 +8,7 @@ snowFor(
   x,
   FUN,
   pre_fun = NULL,
-  varlist = NULL,
+  var_list = NULL,
   cores = parallel::detectCores(),
   env = globalenv(),
   show_workers_msg = F
@@ -21,7 +21,7 @@ snowFor(
 
 \item{pre_fun}{prepare function to init all nodes}
 
-\item{varlist}{name string vector of objects to be exported to nodes: "a_variable"}
+\item{var_list}{name string vector of objects to be exported to nodes: "a_variable"}
 
 \item{cores}{number of threads}
 

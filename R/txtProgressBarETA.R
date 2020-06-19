@@ -100,7 +100,7 @@ txtProgressBarETA <- function (min = 0, max = 1, initial = 0, char = "=", width 
   .nb <- 0L
   .pc <- -1L
   .time0 <- NA
-  .timenow <- NA
+  #.timenow <- NA
   .firstUpdate <- T
 
   # Kevin - Set previous length
@@ -118,7 +118,8 @@ txtProgressBarETA <- function (min = 0, max = 1, initial = 0, char = "=", width 
   }
 
   up <- function(value, calledOnCreation = F) {
-    timenow <- proc.time()[["elapsed"]]
+    timenow <- Sys.time()
+
     if (!calledOnCreation && .firstUpdate) {
       .time0 <<- timenow
       .timenow <<- timenow
@@ -146,8 +147,8 @@ txtProgressBarETA <- function (min = 0, max = 1, initial = 0, char = "=", width 
       paste0(stringr::str_pad(n,width=dig,side = 'left',pad=' '),"/",total,sep="")
     }
 
-    .timenow <<- timenow
-    span <- timenow - .time0
+    #.timenow <<- timenow
+    span <- as.numeric(timenow - .time0)
     timeXiter <- span / (.val - min)
     ETA <- (max - .val) * timeXiter
     ETAstr <- formatTime(ETA)

@@ -135,7 +135,7 @@ txtProgressBarETA <- function (min = 0, max = 1, initial = 0, char = "=", width 
     pc <- round(100 * (value - min) / (max - min))
 
     # Kevin - Just return if no need to redraw the progress bar
-    if (nb == .nb && pc == .pc && timenow - .timenow < 1) {
+    if (nb == .nb && pc == .pc ) {
       return()
     }
 

@@ -15,6 +15,7 @@
 #' @import snow
 #' @import doSNOW
 #' @import foreach
+#' @import crayon
 #'
 #' @examples
 #' go_fun = function(x){
@@ -65,18 +66,20 @@ snowFor = function(x,
 
   registerDoSNOW(env$.snowfor_cl)
 
-  cat("done.\n")
+  done_str = crayon::green("[done]\n")
+
+  cat(done_str)
 
   if(!is.null(pre_fun)){
     cat("Call preparing function ... ")
     clusterCall(env$.snowfor_cl, pre_fun)
-    cat("done.\n")
+    cat(done_str)
   }
 
   if(!is.null(var_list)){
     cat("Copy variables ... ")
     clusterExport(env$.snowfor_cl, var_list)
-    cat("done.\n")
+    cat(done_str)
   }
 #
 #   if (!is.null(pre_fun) | !is.null(var_list)) {

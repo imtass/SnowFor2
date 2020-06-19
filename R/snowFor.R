@@ -66,7 +66,7 @@ snowFor = function(x,
 
   registerDoSNOW(env$.snowfor_cl)
 
-  done_str = crayon::green("[done]\n")
+  done_str = crayon::green("[√]\n")
 
   cat(done_str)
 

@@ -90,9 +90,7 @@ snowFor = function(x,
 
   opts <- list(progress = makeProgress(length(x)))
 
-
   ret = vector(mode = "list", length = length(x))
-
 
   tt = system.time({
     ret <- foreach(i = x, .options.snow = opts) %dopar% {

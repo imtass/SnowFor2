@@ -120,7 +120,7 @@ txtProgressBarETA <- function (min = 0, max = 1, initial = 0, char = "=", width 
   up <- function(value, calledOnCreation = F) {
     timenow <- Sys.time()
 
-    if (!calledOnCreation && .firstUpdate) {
+    if (calledOnCreation) {
       .time0 <<- timenow
       .timenow <<- timenow
       .firstUpdate <<- F

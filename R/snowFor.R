@@ -93,7 +93,7 @@ snowFor = function(x,
 #     cat("done.\n")
 #   }
 
-  cat("Processing ... \n")
+  cat("\nProcessing ... \n")
 
   pb <- txtProgressBarETA(max = length(x))
 
@@ -108,22 +108,15 @@ snowFor = function(x,
 
   ret = vector(mode = "list", length = length(x))
 
+  ret <- foreach(i = x, .options.snow = opts) %dopar% {
+    tryCatch(
+      FUN(i),
+      error = function(e) {
+        ThreadError(e,i)
+      }
+    )}
 
-
-  tt = system.time({
-    ret <- foreach(i = x, .options.snow = opts) %dopar% {
-      tryCatch(
-        FUN(i),
-        error = function(e) {
-          ThreadError(e,i)
-        }
-      )
-    }
-  })
-
-
-  cat("\n")
-  print(tt)
+  cat("\nAll Done.\n")
 
   stopCluster(env$.snowfor_cl)
   rm(".snowfor_cl",envir = env)

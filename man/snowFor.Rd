@@ -11,7 +11,7 @@ snowFor(
   var_list = NULL,
   cores = parallel::detectCores(),
   env = globalenv(),
-  show_workers_msg = F
+  ...
 )
 }
 \arguments{
@@ -27,7 +27,7 @@ snowFor(
 
 \item{env}{env to store the cl object. defalut: globalenv()}
 
-\item{show_workers_msg}{show workers' message or not}
+\item{...}{params pass to makeSOCKcluster()}
 }
 \value{
 

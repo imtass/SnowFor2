@@ -9,7 +9,7 @@
 #' @param var_list name string vector of objects to be exported to nodes: "a_variable"
 #' @param cores number of threads
 #' @param env env to store the cl object. defalut: globalenv()
-#' @param show_workers_msg show workers' message or not
+#' @param ... params pass to makeSOCKcluster()
 #' @return
 #' @export
 #' @import snow
@@ -30,8 +30,7 @@ snowFor = function(x,
                    pre_fun = NULL,
                    var_list = NULL,
                    cores = parallel::detectCores(),
-                   env = globalenv(),
-                   show_workers_msg = F) {
+                   env = globalenv(), ...) {
 
 
   if (is.data.frame(x)) {
@@ -58,11 +57,9 @@ snowFor = function(x,
   cat("\nCores =",cores,"\n")
   cat("Make clusters ... ")
 
-  if(show_workers_msg){
-    assign(".snowfor_cl", makeSOCKcluster(cores, outfile = ""), envir = env)
-  }else{
-    assign(".snowfor_cl", makeCluster(cores, type = "SOCK"), envir = env)
-  }
+
+  assign(".snowfor_cl", makeSOCKcluster(cores, ...), envir = env)
+
 
   registerDoSNOW(env$.snowfor_cl)
 

@@ -1,7 +1,7 @@
 Package: SnowFor2
 Type: Package
 Title: multithreading map-like function based on snow and foreach
-Version: 0.8.0
+Version: 0.9.0
 Author: Li Weicheng
 Maintainer: Li Weicheng <yourself@somewhere.net>
 Description: multithreading map-like function based on snow and foreach
@@ -14,4 +14,5 @@ Imports: doSNOW,
   foreach,
   snow,
   stringr,
-  crayon
+  crayon,
+  dplyr

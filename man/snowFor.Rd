@@ -11,6 +11,7 @@ snowFor(
   var_list = NULL,
   cores = parallel::detectCores(),
   env = globalenv(),
+  use_df = FALSE,
   ...
 )
 }
@@ -26,6 +27,8 @@ snowFor(
 \item{cores}{number of threads}
 
 \item{env}{env to store the cl object. defalut: globalenv()}
+
+\item{use_df}{returns a data.frame}
 
 \item{...}{params pass to makeSOCKcluster()}
 }

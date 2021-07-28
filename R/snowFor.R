@@ -9,6 +9,7 @@
 #' @param var_list name string vector of objects to be exported to nodes: "a_variable"
 #' @param cores number of threads
 #' @param env env to store the cl object. defalut: globalenv()
+#' @param use_df returns a data.frame
 #' @param ... params pass to makeSOCKcluster()
 #' @return
 #' @export
@@ -16,6 +17,7 @@
 #' @import doSNOW
 #' @import foreach
 #' @import crayon
+#' @import dplyr
 #'
 #' @examples
 #' go_fun = function(x){
@@ -30,7 +32,9 @@ snowFor = function(x,
                    pre_fun = NULL,
                    var_list = NULL,
                    cores = parallel::detectCores(),
-                   env = globalenv(), ...) {
+                   env = globalenv(),
+                   use_df = FALSE,
+                   ...) {
 
 
   if (is.data.frame(x)) {
@@ -125,6 +129,9 @@ snowFor = function(x,
 
   if (any(lapply(ret, class) == "ThreadError")) {
     warning("ThreadErrors! Check return.") }
+  else if(use_df){
+    ret = dplyr::bind_rows(ret)
+  }
 
   ret
 }

@@ -30,6 +30,11 @@ test_that("export", {
   expect_equal(unlist(a), (1:6) * 123)
 })
 
+go_fun = function(x){
+  Sys.sleep(0.01)
+  #print(x)
+  x
+}
 
 
 

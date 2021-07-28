@@ -92,11 +92,16 @@ snowFor = function(x,
 
   cat("\nProcessing ... \n")
 
-  pb <- txtProgressBarETA(max = length(x))
+  n = length(x)
+  pb <- txtProgressBarETA(max = n)
+
+  block_size = max(1,floor(n/100))
 
   makeProgress = function(total_size){
-    progress <- function(n) {
-      setTxtProgressBar(pb, n)
+    progress <- function(i) {
+      if(i %% block_size == 0){
+        setTxtProgressBar(pb, i)
+      }
     }
     progress
   }
@@ -118,7 +123,8 @@ snowFor = function(x,
   stopCluster(env$.snowfor_cl)
   rm(".snowfor_cl",envir = env)
 
-  if (any(lapply(ret, class) == "ThreadError")) { warning("ThreadErrors! Check return.") }
+  if (any(lapply(ret, class) == "ThreadError")) {
+    warning("ThreadErrors! Check return.") }
 
   ret
 }
